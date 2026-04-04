@@ -47,10 +47,15 @@ body{font-family:"Raleway",sans-serif;font-weight:300;color:#111;overflow-x:hidd
 /* SECTIONS */
 .pg{background:#fff}
 .pg-section{display:grid;grid-template-columns:240px 1fr;border-bottom:1px solid #e8e4de}
+.pg-section--wide{display:block}
 .pg-sidebar{padding:80px 48px;border-right:1px solid #e8e4de;display:flex;flex-direction:column}
+.pg-section--wide .pg-sidebar{padding:52px 80px 0;border-right:none;flex-direction:row;align-items:center;gap:10px}
+.pg-section--wide .pg-num{font-size:11px;font-weight:300;color:#aaa;line-height:1;margin-top:0;order:-1}
+.pg-section--wide .pg-label::before{content:'— '}
 .pg-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#555}
 .pg-num{font-size:80px;font-weight:100;color:#ebebeb;line-height:1;margin-top:auto}
 .pg-body{padding:80px 64px}
+.pg-section--wide .pg-body{padding:20px 80px 72px}
 
 /* ABOUT */
 .about-h{font-size:clamp(32px,4vw,50px);font-weight:200;line-height:1.1;margin-bottom:36px}
@@ -84,17 +89,25 @@ body{font-family:"Raleway",sans-serif;font-weight:300;color:#111;overflow-x:hidd
 .proj-header h2{font-size:clamp(28px,3.5vw,44px);font-weight:200;line-height:1.1}
 .proj-header h2 em{font-style:italic}
 .proj-note{font-size:11px;letter-spacing:.1em;color:#555;text-align:right;max-width:160px;line-height:1.6;text-transform:uppercase}
-.project{display:grid;grid-template-columns:44px 1fr 110px;gap:36px;align-items:start;padding:36px 0;border-bottom:1px solid #e8e4de;transition:all .2s}
-.project:last-child{border-bottom:none}
-.project:hover{background:#f8f8f6;padding-left:14px;padding-right:14px;margin:0 -14px}
-.proj-n{font-size:11px;color:#555;letter-spacing:.1em;padding-top:3px}
-.proj-t{font-size:28px;font-weight:200;margin-bottom:10px;line-height:1.1}
-.proj-d{font-size:15px;color:#666;line-height:1.8;max-width:540px}
-.proj-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
-.proj-tag{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#555;border:1px solid #bbb;padding:3px 7px}
-.proj-impact{text-align:right}
-.impact-n{font-size:34px;font-weight:200;color:#111;line-height:1}
-.impact-l{font-size:11px;letter-spacing:.1em;color:#555;text-transform:uppercase;margin-top:4px;line-height:1.4}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:32px}
+.proj-card{position:relative;overflow:hidden;aspect-ratio:4/3;background:#0d0d0b;display:block;text-decoration:none;color:inherit;cursor:default}
+.proj-card.linked{cursor:pointer}
+.proj-img{position:absolute;inset:0}
+.proj-img-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:130px;font-weight:100;color:rgba(232,228,222,0.04);user-select:none}
+.proj-card-title-bar{position:absolute;bottom:0;left:0;right:0;padding:20px 24px 24px;z-index:2;background:linear-gradient(transparent,rgba(13,13,11,0.75));transition:opacity .3s}
+.proj-card:hover .proj-card-title-bar{opacity:0}
+.proj-n{font-size:11px;color:rgba(232,228,222,0.5);letter-spacing:.1em;margin-bottom:6px}
+.proj-t{font-size:22px;font-weight:200;color:#e8e4de;line-height:1.2}
+.proj-card-overlay{position:absolute;inset:0;background:rgba(13,13,11,0.92);display:flex;flex-direction:column;justify-content:flex-end;padding:28px;opacity:0;transition:opacity .3s ease;z-index:3}
+.proj-card:hover .proj-card-overlay{opacity:1}
+.proj-d{font-size:13px;color:rgba(232,228,222,0.75);line-height:1.75;margin-bottom:16px}
+.proj-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px}
+.proj-tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(232,228,222,0.5);border:1px solid rgba(232,228,222,0.2);padding:2px 7px}
+.proj-card-footer{display:flex;justify-content:space-between;align-items:flex-end}
+.proj-impact{text-align:left}
+.impact-n{font-size:28px;font-weight:200;color:#e8e4de;line-height:1}
+.impact-l{font-size:11px;letter-spacing:.1em;color:rgba(232,228,222,0.5);text-transform:uppercase;margin-top:4px;line-height:1.4}
+.proj-img-cta{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#e8e4de;border-bottom:1px solid rgba(232,228,222,0.4);padding-bottom:3px;align-self:flex-end}
 
 /* TRENDS */
 .trends-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e8e4de;margin-top:52px}
@@ -126,11 +139,9 @@ footer span{font-size:11px;letter-spacing:.1em;color:#555;text-transform:upperca
 
 @media(max-width:860px){
   .lang-bar,.inner-nav{padding:10px 20px}
-  .pg-section{grid-template-columns:1fr}
-  .pg-sidebar{padding:36px 20px 0;border-right:none}
-  .pg-num{display:none}
-  .pg-body{padding:36px 20px}
-  .steps,.trends-grid{grid-template-columns:1fr 1fr}
+  .pg-sidebar{padding:28px 20px 0}
+  .pg-body{padding:12px 20px 48px}
+  .steps,.trends-grid,.proj-grid{grid-template-columns:1fr}
   .project{grid-template-columns:1fr;gap:10px}
   .proj-impact{text-align:left}
   footer{flex-direction:column;gap:6px;text-align:center}
@@ -398,7 +409,7 @@ function checkPwd(){
 </div>
 
 <!-- PROJECTS -->
-<div id="projects" class="pg-section">
+<div id="projects" class="pg-section pg-section--wide">
   <div class="pg-sidebar">
     <span class="pg-label" data-en="Projects" data-es="Proyectos">Projects</span>
     <div class="pg-num">03</div>
@@ -408,25 +419,78 @@ function checkPwd(){
       <h2><span data-en="Selected <em>work</em>" data-es="Trabajo <em>selecto</em>">Selected <em>work</em></span></h2>
       <p class="proj-note" data-en="All work confidential. Details under NDA on request." data-es="Todo el trabajo es confidencial. Detalles bajo NDA a solicitud.">All work confidential. Details under NDA on request.</p>
     </div>
-    <div class="project reveal">
-      <div class="proj-n">01</div>
-      <div><a href="case-study-1.html" style="text-decoration:none;color:inherit"><div class="proj-t" data-en="Event Management at Scale ↗" data-es="Gestion de Eventos a Escala ↗">Event Management at Scale ↗</div></a><div class="proj-d" data-en="Redesigned the <strong>end-to-end experience for managing events across 100+ countries</strong> at Amazon Web Services. A fragmented system used by teams with radically different contexts, languages, and workflows. Delivered a <strong>unified, accessible design that reduced operational friction globally.</strong>" data-es="Redsene la experiencia de extremo a extremo para gestionar eventos en mas de 100 paises en AWS. Un sistema fragmentado usado por equipos con contextos, idiomas y flujos radicalmente distintos.">Redesigned the <strong>end-to-end experience for managing events across 100+ countries</strong> at Amazon Web Services. A fragmented system used by teams with radically different contexts, languages, and workflows. Delivered a <strong>unified, accessible design that reduced operational friction globally.</strong></div><div class="proj-tags"><span class="proj-tag">UX Research</span><span class="proj-tag">Information Architecture</span><span class="proj-tag">Enterprise</span><span class="proj-tag">Accessibility</span><span class="proj-tag">AWS</span></div></div>
-      <div class="proj-impact"><div class="impact-n">100+</div><div class="impact-l" data-en="countries served" data-es="paises impactados">countries served</div></div>
-    </div>
-    <div class="project reveal">
-      <div class="proj-n">02</div>
-      <div><div class="proj-t" data-en="Enterprise Contract Management" data-es="Gestion de Contratos Empresariales">Enterprise Contract Management</div><div class="proj-d" data-en="Transformed a complex, high-stakes contract management workflow at AWS. Users were <strong>legal, finance, and operations teams with zero tolerance for error.</strong> Designed a system that made critical decisions faster, clearer, and auditable. The resulting design system <strong>cut frontend UI code by 95%.</strong>" data-es="Transforme un flujo de trabajo complejo de gestion de contratos en AWS. El design system resultante redujo el codigo UI en un 95%.">Transformed a complex, high-stakes contract management workflow at AWS. Users were <strong>legal, finance, and operations teams with zero tolerance for error.</strong> Designed a system that made critical decisions faster, clearer, and auditable. The resulting design system <strong>cut frontend UI code by 95%.</strong></div><div class="proj-tags"><span class="proj-tag">Enterprise UX</span><span class="proj-tag">Design Systems</span><span class="proj-tag">Prototyping</span><span class="proj-tag">AWS</span></div></div>
-      <div class="proj-impact"><div class="impact-n">95%</div><div class="impact-l" data-en="less UI code" data-es="menos codigo UI">less UI code</div></div>
-    </div>
-    <div class="project reveal">
-      <div class="proj-n">03</div>
-      <div><div class="proj-t" data-en="Embark Plan" data-es="Embark Plan">Embark Plan</div><div class="proj-d" data-en="Designed the UX for an onboarding and planning product at AWS, <strong>helping new teams navigate a complex cloud environment from day one.</strong> The brief was vague. The timeline was tight. The output was <strong>a structured, research-backed experience that scaled across user types.</strong>" data-es="Disene la UX para un producto de onboarding en AWS. El brief era vago. El timeline era corto. El resultado fue una experiencia estructurada y respaldada por investigacion.">Designed the UX for an onboarding and planning product at AWS, <strong>helping new teams navigate a complex cloud environment from day one.</strong> The brief was vague. The timeline was tight. The output was <strong>a structured, research-backed experience that scaled across user types.</strong></div><div class="proj-tags"><span class="proj-tag">Onboarding UX</span><span class="proj-tag">UX Research</span><span class="proj-tag">Design Systems</span><span class="proj-tag">AWS</span></div></div>
-      <div class="proj-impact"><div class="impact-n">0-1</div><div class="impact-l" data-en="product built" data-es="producto construido">product built</div></div>
-    </div>
-    <div class="project reveal">
-      <div class="proj-n">04</div>
-      <div><div class="proj-t" data-en="Cross-Platform Experience / Schlumberger" data-es="Experiencia Multiplataforma / Schlumberger">Cross-Platform Experience / Schlumberger</div><div class="proj-d" data-en="Designed a <strong>unified experience spanning TV and desktop</strong> for Schlumberger. Oil and gas operations demand precision, speed, and zero ambiguity. Delivered an interface that <strong>worked across very different screen contexts while keeping the system consistent under pressure.</strong>" data-es="Disene una experiencia unificada que abarca TV y escritorio para Schlumberger. Las operaciones de oil and gas exigen precision y cero ambiguedad.">Designed a <strong>unified experience spanning TV and desktop</strong> for Schlumberger. Oil and gas operations demand precision, speed, and zero ambiguity. Delivered an interface that <strong>worked across very different screen contexts while keeping the system consistent under pressure.</strong></div><div class="proj-tags"><span class="proj-tag">Cross-platform</span><span class="proj-tag">TV UI</span><span class="proj-tag">Oil &amp; Gas</span><span class="proj-tag">Visual Design</span></div></div>
-      <div class="proj-impact"><div class="impact-n">2</div><div class="impact-l" data-en="platforms, 1 system" data-es="plataformas, 1 sistema">platforms, 1 system</div></div>
+    <div class="proj-grid">
+      <a href="case-study-1.html" class="proj-card linked reveal">
+        <div class="proj-img"><div class="proj-img-ph">01</div></div>
+        <div class="proj-card-title-bar">
+          <div class="proj-n">01</div>
+          <div class="proj-t" data-en="Event Management at Scale" data-es="Gestion de Eventos a Escala">Event Management at Scale</div>
+        </div>
+        <div class="proj-card-overlay">
+          <div class="proj-d" data-en="Redesigned the end-to-end experience for managing events across 100+ countries at AWS. A fragmented system used by teams with radically different contexts, languages, and workflows. Delivered a unified, accessible design that reduced operational friction globally." data-es="Redsene la experiencia de extremo a extremo para gestionar eventos en mas de 100 paises en AWS.">Redesigned the end-to-end experience for managing events across 100+ countries at AWS. A fragmented system used by teams with radically different contexts, languages, and workflows.</div>
+          <div class="proj-tags"><span class="proj-tag">UX Research</span><span class="proj-tag">Information Architecture</span><span class="proj-tag">Enterprise</span><span class="proj-tag">Accessibility</span><span class="proj-tag">AWS</span></div>
+          <div class="proj-card-footer">
+            <div class="proj-impact"><div class="impact-n">100+</div><div class="impact-l" data-en="countries served" data-es="paises impactados">countries served</div></div>
+            <span class="proj-img-cta">View case study ↗</span>
+          </div>
+        </div>
+      </a>
+      <div class="proj-card reveal">
+        <div class="proj-img"><div class="proj-img-ph">02</div></div>
+        <div class="proj-card-title-bar">
+          <div class="proj-n">02</div>
+          <div class="proj-t" data-en="Enterprise Contract Management" data-es="Gestion de Contratos Empresariales">Enterprise Contract Management</div>
+        </div>
+        <div class="proj-card-overlay">
+          <div class="proj-d" data-en="Transformed a complex, high-stakes contract management workflow at AWS. Users were legal, finance, and operations teams with zero tolerance for error. The resulting design system cut frontend UI code by 95%." data-es="Transforme un flujo de trabajo complejo de gestion de contratos en AWS.">Transformed a complex, high-stakes contract management workflow at AWS. Users were legal, finance, and operations teams with zero tolerance for error. The resulting design system cut frontend UI code by 95%.</div>
+          <div class="proj-tags"><span class="proj-tag">Enterprise UX</span><span class="proj-tag">Design Systems</span><span class="proj-tag">Prototyping</span><span class="proj-tag">AWS</span></div>
+          <div class="proj-card-footer"><div class="proj-impact"><div class="impact-n">95%</div><div class="impact-l" data-en="less UI code" data-es="menos codigo UI">less UI code</div></div></div>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-img"><div class="proj-img-ph">03</div></div>
+        <div class="proj-card-title-bar">
+          <div class="proj-n">03</div>
+          <div class="proj-t" data-en="Embark Plan" data-es="Embark Plan">Embark Plan</div>
+        </div>
+        <div class="proj-card-overlay">
+          <div class="proj-d" data-en="Designed the UX for an onboarding and planning product at AWS, helping new teams navigate a complex cloud environment from day one. The brief was vague. The timeline was tight. The output was a structured, research-backed experience that scaled across user types." data-es="Disene la UX para un producto de onboarding en AWS.">Designed the UX for an onboarding and planning product at AWS, helping new teams navigate a complex cloud environment from day one. The brief was vague. The timeline was tight.</div>
+          <div class="proj-tags"><span class="proj-tag">Onboarding UX</span><span class="proj-tag">UX Research</span><span class="proj-tag">Design Systems</span><span class="proj-tag">AWS</span></div>
+          <div class="proj-card-footer"><div class="proj-impact"><div class="impact-n">0→1</div><div class="impact-l" data-en="product built" data-es="producto construido">product built</div></div></div>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-img"><div class="proj-img-ph">04</div></div>
+        <div class="proj-card-title-bar">
+          <div class="proj-n">04</div>
+          <div class="proj-t" data-en="Cross-Platform / Schlumberger" data-es="Multiplataforma / Schlumberger">Cross-Platform / Schlumberger</div>
+        </div>
+        <div class="proj-card-overlay">
+          <div class="proj-d" data-en="Designed a unified experience spanning TV and desktop for Schlumberger. Oil and gas operations demand precision, speed, and zero ambiguity. Delivered an interface that worked across very different screen contexts while keeping the system consistent under pressure." data-es="Disene una experiencia unificada que abarca TV y escritorio para Schlumberger.">Designed a unified experience spanning TV and desktop for Schlumberger. Oil and gas operations demand precision, speed, and zero ambiguity.</div>
+          <div class="proj-tags"><span class="proj-tag">Cross-platform</span><span class="proj-tag">TV UI</span><span class="proj-tag">Oil &amp; Gas</span><span class="proj-tag">Visual Design</span></div>
+          <div class="proj-card-footer"><div class="proj-impact"><div class="impact-n">2</div><div class="impact-l" data-en="platforms, 1 system" data-es="plataformas, 1 sistema">platforms, 1 system</div></div></div>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-img"><div class="proj-img-ph">05</div></div>
+        <div class="proj-card-title-bar">
+          <div class="proj-n">05</div>
+          <div class="proj-t">Coming soon</div>
+        </div>
+        <div class="proj-card-overlay">
+          <div class="proj-d" style="color:rgba(232,228,222,0.4)">Case study in progress.</div>
+        </div>
+      </div>
+      <div class="proj-card reveal">
+        <div class="proj-img"><div class="proj-img-ph">06</div></div>
+        <div class="proj-card-title-bar">
+          <div class="proj-n">06</div>
+          <div class="proj-t">Coming soon</div>
+        </div>
+        <div class="proj-card-overlay">
+          <div class="proj-d" style="color:rgba(232,228,222,0.4)">Case study in progress.</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
