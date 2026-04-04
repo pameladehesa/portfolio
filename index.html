@@ -29,7 +29,7 @@ body{font-family:"Raleway",sans-serif;font-weight:300;color:#111;overflow-x:hidd
 .cover-li svg{width:24px;height:24px;fill:#e8e4de}
 
 /* LANG BAR */
-.lang-bar{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:flex-end;align-items:center;padding:10px 48px;gap:6px;background:rgba(255,255,255,0.97);border-bottom:1px solid #e8e4de;opacity:0;pointer-events:none;transition:opacity .4s}
+.lang-bar{display:none}
 .lang-bar.show{opacity:1;pointer-events:auto}
 .lang-lbl{font-size:10px;letter-spacing:.14em;color:#bbb;text-transform:uppercase;margin-right:8px}
 .lang-btn{font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:none;border:1px solid #ddd;color:#bbb;padding:3px 10px;cursor:pointer;transition:all .2s}
@@ -37,7 +37,7 @@ body{font-family:"Raleway",sans-serif;font-weight:300;color:#111;overflow-x:hidd
 .lang-btn:hover:not(.active){border-color:#111;color:#111}
 
 /* NAV */
-.inner-nav{position:fixed;top:41px;left:0;right:0;z-index:199;display:flex;justify-content:space-between;align-items:center;padding:18px 48px;background:rgba(255,255,255,0.97);border-bottom:1px solid #e8e4de;opacity:0;pointer-events:none;transition:opacity .4s}
+.inner-nav{display:none}
 .inner-nav.show{opacity:1;pointer-events:auto}
 .inner-nav-name{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#111;text-decoration:none;font-weight:300}
 .inner-nav-links{display:flex;gap:32px;list-style:none}
@@ -135,9 +135,124 @@ footer span{font-size:10px;letter-spacing:.1em;color:#ccc;text-transform:upperca
   .proj-impact{text-align:left}
   footer{flex-direction:column;gap:6px;text-align:center}
 }
+strong{font-weight:500;color:#333;}
+
+.resume-btn{
+  display:inline-block;margin-top:24px;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:#111;text-decoration:none;
+  border:1px solid #111;padding:12px 28px;
+  transition:all .2s;
+}
+.resume-btn:hover{background:#111;color:#fff;}
+
+/* TOP NAV */
+.top-nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 48px;
+  background:rgba(13,13,11,0.96);
+  border-bottom:none;
+}
+.top-nav.scrolled{
+  background:rgba(13,13,11,0.97);
+  border-bottom-color:rgba(232,228,222,0.1);
+}
+.top-nav-name{
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  text-decoration:none;font-weight:300;
+  color:#e8e4de;
+}
+.top-nav.scrolled .top-nav-name{color:#e8e4de;}
+.top-nav-links{display:flex;gap:32px;list-style:none;}
+.top-nav-links a{
+  font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  text-decoration:none;
+  color:rgba(232,228,222,0.55);
+}
+.top-nav.scrolled .top-nav-links a{color:rgba(232,228,222,0.55);}
+.top-nav-links a:hover{color:#e8e4de;}
+.top-nav.scrolled .top-nav-links a:hover{color:#e8e4de;}
+.top-nav-lang{display:flex;gap:4px;margin-left:24px;}
+.top-nav-lang button{
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  background:none;border:1px solid rgba(232,228,222,0.3);
+  color:rgba(232,228,222,0.4);padding:3px 8px;cursor:pointer;
+}
+.top-nav.scrolled .top-nav-lang button{border-color:rgba(232,228,222,0.3);color:rgba(232,228,222,0.4);}
+.top-nav-lang button.active{background:#e8e4de;color:#111;border-color:#e8e4de;}
+.top-nav.scrolled .top-nav-lang button.active{background:#e8e4de;color:#111;border-color:#e8e4de;}
+.top-nav-lang button:hover:not(.active){border-color:#e8e4de;color:#e8e4de;}
+.top-nav.scrolled .top-nav-lang button:hover:not(.active){border-color:#e8e4de;color:#e8e4de;}
 </style>
 </head>
 <body>
+
+<div id="pwd-screen" style="
+  position:fixed;inset:0;z-index:9999;
+  background:#0d0d0b;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:'Raleway',sans-serif;
+">
+  <div style="text-align:center;max-width:320px;width:100%;padding:0 24px">
+    <p style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(232,228,222,0.35);margin-bottom:40px">Pamela Dehesa &middot; Portfolio</p>
+    <input id="pwd-input" type="password" placeholder="Password"
+      style="
+        width:100%;background:transparent;border:none;border-bottom:1px solid rgba(232,228,222,0.25);
+        color:#e8e4de;font-family:Raleway,sans-serif;font-size:16px;font-weight:300;
+        padding:10px 0;outline:none;text-align:center;letter-spacing:.1em;margin-bottom:32px;
+      "
+      onkeydown="if(event.key==='Enter')checkPwd()"
+    />
+    <br>
+    <button onclick="checkPwd()" style="
+      background:none;border:1px solid rgba(232,228,222,0.3);color:rgba(232,228,222,0.6);
+      font-family:Raleway,sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+      padding:10px 32px;cursor:pointer;
+    ">Enter</button>
+    <p id="pwd-error" style="color:rgba(232,228,222,0.3);font-size:11px;margin-top:20px;opacity:0;transition:opacity .3s">Incorrect password</p>
+  </div>
+</div>
+<script>
+(function(){
+  if(sessionStorage.getItem('auth')==='1'){
+    document.addEventListener('DOMContentLoaded',function(){
+      var s=document.getElementById('pwd-screen');
+      if(s)s.style.display='none';
+    });
+  }
+})();
+function checkPwd(){
+  var val=document.getElementById('pwd-input').value;
+  if(val==='Ppwk@367-Q78'){
+    document.getElementById('pwd-screen').style.display='none';
+    sessionStorage.setItem('auth','1');
+  } else {
+    var err=document.getElementById('pwd-error');
+    err.style.opacity='1';
+    setTimeout(function(){err.style.opacity='0';},2000);
+    document.getElementById('pwd-input').value='';
+  }
+}
+</script>
+
+
+<nav class="top-nav" id="top-nav">
+  <a href="#" class="top-nav-name">Pamela Dehesa</a>
+  <div style="display:flex;align-items:center">
+    <ul class="top-nav-links">
+      <li><a href="#about" data-en="About" data-es="Yo">About</a></li>
+      <li><a href="#process" data-en="Process" data-es="Proceso">Process</a></li>
+      <li><a href="#projects" data-en="Projects" data-es="Proyectos">Projects</a></li>
+      
+      <li><a href="#contact" data-en="Contact" data-es="Contacto">Contact</a></li>
+    </ul>
+    <div class="top-nav-lang">
+      <button class="active" id="btn-en" onclick="setLang('en')">EN</button>
+      <button id="btn-es" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</nav>
 
 <!-- COVER -->
 <section class="cover">
@@ -232,7 +347,7 @@ footer span{font-size:10px;letter-spacing:.1em;color:#ccc;text-transform:upperca
     <li><a href="#about" data-en="About" data-es="Yo">About</a></li>
     <li><a href="#process" data-en="Process" data-es="Proceso">Process</a></li>
     <li><a href="#projects" data-en="Projects" data-es="Proyectos">Projects</a></li>
-    <li><a href="#trends" data-en="Trends" data-es="Tendencias">Trends</a></li>
+    
     <li><a href="#contact" data-en="Contact" data-es="Contacto">Contact</a></li>
   </ul>
 </nav>
@@ -245,9 +360,9 @@ footer span{font-size:10px;letter-spacing:.1em;color:#ccc;text-transform:upperca
   </div>
   <div class="pg-body">
     <h2 class="about-h reveal" data-en="I find structure<br>where others <em>find noise.</em>" data-es="Encuentro estructura<br>donde otros <em>ven ruido.</em>">I find structure<br>where others <em>find noise.</em></h2>
-    <p class="about-p reveal d1" data-en="I started when websites were built in Flash. <strong>Twenty years and five industries later</strong>, I am a Senior Product Designer at Amazon Web Services, designing for products used across <strong>100+ countries</strong>. My background spans Pharma, Logistics, Education, Oil &amp; Gas, and Tech. That range is not a gap in focus. <strong>It is where my superpower comes from.</strong>" data-es="Empece cuando los sitios se construian en Flash. Veinte anos y cinco industrias despues, soy Senior Product Designer en Amazon Web Services, disenando para productos usados en mas de 100 paises. Mi background abarca Pharma, Logistica, Educacion, Oil &amp; Gas y Tech. Esa amplitud no es falta de enfoque. Es mi superpoder.">I started when websites were built in Flash. <strong>Twenty years and five industries later</strong>, I am a Senior Product Designer at Amazon Web Services, designing for products used across <strong>100+ countries</strong>. My background spans Pharma, Logistics, Education, Oil &amp; Gas, and Tech. That range is not a gap in focus. <strong>It is where my superpower comes from.</strong></p>
-    <p class="about-p reveal d2" data-en="I hold a <strong>Master's in Education</strong>, a <strong>Master's in User Experience Design</strong>, <strong>NNG's UX Management certification</strong>, and a <strong>UI/UX for AI Products certification from Stanford</strong>. For 10 years I was a University Professor and a conference speaker in Mexico and the US. I mentor designers on ADPList and through the Amazon Mentoring Program, and I have served as a <strong>Juror in international design competitions</strong>." data-es="Tengo Maestria en Educacion, Maestria en UX Design, certificacion de UX Management de NNG, y certificacion de UI/UX para Productos de IA de Stanford. Por 10 anos fui Profesora Universitaria y speaker en Mexico y Estados Unidos. Mentoreo disenadores en ADPList y en el Amazon Mentoring Program, y he sido Jurada en competencias internacionales de diseno.">I hold a <strong>Master's in Education</strong>, a <strong>Master's in User Experience Design</strong>, <strong>NNG's UX Management certification</strong>, and a <strong>UI/UX for AI Products certification from Stanford</strong>. For 10 years I was a University Professor and a conference speaker in Mexico and the US. I mentor designers on ADPList and through the Amazon Mentoring Program, and I have served as a <strong>Juror in international design competitions</strong>.</p>
-    <p class="about-p reveal d3" data-en="Born in Mexico, educated by Germans, living in the US. That multicultural lens shapes how I read a room and find common ground across disciplines. <strong>I never fall in love with my ideas.</strong> Feedback, pivots, and technical constraints are all welcome. <strong>The one thing I will not trade away is the user.</strong>" data-es="Naci en Mexico, me educaron los alemanes, vivo en Estados Unidos. Esa perspectiva multicultural da forma a como leo una sala. Jamas me enamoro de mis ideas. El feedback, los pivots y las restricciones tecnicas son bienvenidos. Lo unico que no negocio es al usuario.">Born in Mexico, educated by Germans, living in the US. That multicultural lens shapes how I read a room and find common ground across disciplines. <strong>I never fall in love with my ideas.</strong> Feedback, pivots, and technical constraints are all welcome. <strong>The one thing I will not trade away is the user.</strong></p>
+    <p class="about-p reveal d1">Design has never been something I do. It is how I think. I studied <strong>Strategic Design at Instituto Tecnológico y de Estudios Superiores de Occidente (ITESO)</strong>, graduated Summa Cum Laude, then kept going: a <strong>Master's in Education</strong> (Summa Cum Laude), a <strong>Master's in UX Design</strong>, <strong>NNG's UX Management certification</strong>, and most recently <strong>UI/UX for AI Products at Stanford</strong>. Before any of that, I spent 8 years studying haute couture, which taught me something no design school ever could: that making something beautiful and functional at the same time is never an accident.</p>
+    <p class="about-p reveal d2">For the past 6 years I have been a Senior Product Designer at <strong>Amazon Web Services</strong>, building products used across <strong>100+ countries</strong>. Before AWS, I worked across Healthcare, Oil &amp; Gas, Logistics, and Education. Each industry brought a different problem and a different set of constraints. That range is not a gap in focus. <strong>It is where the ability to walk into any room, read what is needed, and get to work comes from.</strong> I also spent 10 years as a <strong>College Professor at Instituto Tecnológico y de Estudios Superiores de Occidente (ITESO) and Tec de Monterrey</strong>, teaching Strategic Design, UX, Editorial Design, and Digital Illustration. I have spoken at conferences in Mexico and the US, coached at Amazon's Creative Jam with Adobe, and served as jury at the Clap Awards and Veredictas FOROALFA. I mentor designers on ADPList and through the Amazon Mentoring Program.</p>
+    <p class="about-p reveal d3">I grew up in Mexico City and attended a German school. Two cultures, one work ethic: <strong>show up, do the work, be honest, and do not stop until it is right.</strong> I have a strong bias for action. If I do not know how to do something, I figure it out. I take feedback fast, I do not get attached to ideas, and I move. Today <strong>Figma and AI are my closest collaborators</strong>, and I use them to go from ambiguity to functional prototype faster than most teams finish their first meeting. The tool will keep changing. <strong>The commitment to the user never will.</strong></p>
     <div class="creds reveal d2">
       <div class="cred"><div class="cred-n">20</div><div class="cred-l" data-en="Years exp." data-es="Anos exp.">Years exp.</div></div>
       <div class="cred"><div class="cred-n">10</div><div class="cred-l" data-en="Years teaching" data-es="Anos ensenando">Years teaching</div></div>
@@ -271,13 +386,13 @@ footer span{font-size:10px;letter-spacing:.1em;color:#ccc;text-transform:upperca
   <div class="pg-body">
     <div class="sec-intro reveal">
       <h2 data-en="From ambiguity<br>to <em>clarity.</em>" data-es="De la ambiguedad<br>a la <em>claridad.</em>">From ambiguity<br>to <em>clarity.</em></h2>
-      <p data-en="My process is built for fast-moving environments where the input is not always clear. I start by understanding the problem, shape it through the user's perspective, and move quickly into exploration and validation. At every stage, I look for solutions that are clear, accessible, and realistic to build." data-es="Mi proceso esta disenado para entornos de ritmo rapido donde el input no siempre es claro. Comienzo entendiendo el problema, lo moldeo desde la perspectiva del usuario, y avanzo rapidamente hacia la exploracion y validacion. En cada etapa, busco soluciones que sean claras, accesibles y realistas de construir.">My process is built for fast-moving environments where the input is not always clear. I start by understanding the problem, shape it through the user's perspective, and move quickly into exploration and validation. At every stage, I look for solutions that are clear, accessible, and realistic to build.</p>
+      <p data-en="I do not wait for perfect information. I form a hypothesis, move fast, test it with real users, and adjust. Every stage is a chance to learn something that makes the next decision sharper. The brief can be vague. The deadline can be tight. Neither is a reason to skip the thinking." data-es="No espero informacion perfecta. Formo una hipotesis, avanzo rapido, la pruebo con usuarios reales y ajusto. Cada etapa es una oportunidad de aprender algo que hace la siguiente decision mas clara. El brief puede ser vago. El deadline puede ser corto. Ninguno es razon para saltarse el pensamiento.">I do not wait for perfect information. I form a hypothesis, move fast, test it with real users, and adjust. Every stage is a chance to learn something that makes the next decision sharper. The brief can be vague. The deadline can be tight. Neither is a reason to skip the thinking.</p>
     </div>
     <div class="steps">
       <div class="step reveal"><div class="step-n">01</div><div class="step-t" data-en="Understand" data-es="Entender">Understand</div><div class="step-d" data-en="<strong>I begin by understanding the problem as clearly as possible, no matter how it arrives.</strong> Sometimes it is a PRD. Sometimes it is a list of requirements, a spreadsheet, or just an early idea. I ask questions, look for what is missing, and <strong>define the core problem before moving into design.</strong> When I cannot speak with users directly, I create realistic user types and scenarios to guide decisions." data-es="Comienzo entendiendo el problema lo mas claramente posible, sin importar como llegue. A veces es un PRD. A veces es una lista de requisitos, una hoja de calculo, o solo una idea inicial. Hago preguntas, busco lo que falta, y defino el problema central antes de disenar. Cuando no puedo hablar con usuarios directamente, creo tipos de usuarios y escenarios realistas para guiar las decisiones."><strong>I begin by understanding the problem as clearly as possible, no matter how it arrives.</strong> Sometimes it is a PRD. Sometimes it is a list of requirements, a spreadsheet, or just an early idea. I ask questions, look for what is missing, and <strong>define the core problem before moving into design.</strong> When I cannot speak with users directly, I create realistic user types and scenarios to guide decisions.</div></div>
-      <div class="step reveal d1"><div class="step-n">02</div><div class="step-t" data-en="Frame" data-es="Enmarcar">Frame</div><div class="step-d" data-en="Once the problem is clearer, I shape it through the lens of <strong>usability, accessibility, and context.</strong> I think about clarity at first glance, strong hierarchy, keyboard navigation, language needs, and how the experience will work for different people in different situations. <strong>My goal is to make complex things feel simple without losing what matters.</strong>" data-es="Una vez que el problema es mas claro, lo moldeo a traves de la usabilidad, accesibilidad y contexto. Pienso en la claridad a primera vista, jerarquia solida, navegacion por teclado, necesidades de idioma, y como funcionara la experiencia para diferentes personas en diferentes situaciones. Mi objetivo es hacer que las cosas complejas se sientan simples sin perder lo que importa.">Once the problem is clearer, I shape it through the lens of <strong>usability, accessibility, and context.</strong> I think about clarity at first glance, strong hierarchy, keyboard navigation, language needs, and how the experience will work for different people in different situations. <strong>My goal is to make complex things feel simple without losing what matters.</strong></div></div>
-      <div class="step reveal d2"><div class="step-n">03</div><div class="step-t" data-en="Explore" data-es="Explorar">Explore</div><div class="step-d" data-en="From there, I start exploring. Ideas often begin as quick notes, rough sketches, or small fragments that help me think. <strong>I use feedback early and often</strong> with designers and product partners because good ideas get stronger when they are challenged. <strong>I do not get attached to a solution.</strong> I keep refining until the design serves the user in the best possible way." data-es="Desde ahi, comienzo a explorar. Las ideas a menudo comienzan como notas rapidas, bocetos o pequenos fragmentos que me ayudan a pensar. Uso el feedback de manera temprana y frecuente con disenadores y socios de producto porque las buenas ideas se fortalecen cuando son cuestionadas. No me apego a una solucion. Sigo refinando hasta que el diseno sirve al usuario de la mejor manera posible.">From there, I start exploring. Ideas often begin as quick notes, rough sketches, or small fragments that help me think. <strong>I use feedback early and often</strong> with designers and product partners because good ideas get stronger when they are challenged. <strong>I do not get attached to a solution.</strong> I keep refining until the design serves the user in the best possible way.</div></div>
-      <div class="step reveal d3"><div class="step-n">04</div><div class="step-t" data-en="Prototype &amp; Validate" data-es="Prototipar y Validar">Prototype &amp; Validate</div><div class="step-d" data-en="<strong>I prototype to understand the full experience and find where it may break.</strong> Prototyping helps me see the flow, the feedback states, and the small moments that shape the overall experience. Then I step back and evaluate through <strong>heuristics, expert review, and user testing.</strong> I also look for ways to reduce development effort, but <strong>never by compromising the user experience.</strong>" data-es="Prototipo para entender la experiencia completa y encontrar donde puede fallar. El prototipado me ayuda a ver el flujo, los estados de feedback, y los pequenos momentos que dan forma a la experiencia general. Luego evaluo mediante heuristicas, revision experta y user testing cuando es posible. Tambien busco formas de reducir el esfuerzo de desarrollo, pero nunca comprometiendo la experiencia del usuario."><strong>I prototype to understand the full experience and find where it may break.</strong> Prototyping helps me see the flow, the feedback states, and the small moments that shape the overall experience. Then I step back and evaluate through <strong>heuristics, expert review, and user testing.</strong> I also look for ways to reduce development effort, but <strong>never by compromising the user experience.</strong></div></div>
+      <div class="step reveal d1"><div class="step-n">02</div><div class="step-t" data-en="Frame" data-es="Enmarcar">Frame</div><div class="step-d" data-en="I shape the problem through the lens of the user, not the business. That means thinking about <strong>clarity at first glance, accessibility, hierarchy, and context</strong>, how this will work for someone in a hurry, in a different language, on a different device. Complexity is my raw material. Simplicity is what I am building toward." data-es="Una vez que el problema es mas claro, lo moldeo a traves de la usabilidad, accesibilidad y contexto. Pienso en la claridad a primera vista, jerarquia solida, navegacion por teclado, necesidades de idioma, y como funcionara la experiencia para diferentes personas en diferentes situaciones. Mi objetivo es hacer que las cosas complejas se sientan simples sin perder lo que importa.">Once the problem is clearer, I shape it through the lens of <strong>usability, accessibility, and context.</strong> I think about clarity at first glance, strong hierarchy, keyboard navigation, language needs, and how the experience will work for different people in different situations. <strong>My goal is to make complex things feel simple without losing what matters.</strong></div></div>
+      <div class="step reveal d2"><div class="step-n">03</div><div class="step-t" data-en="Explore" data-es="Explorar">Explore</div><div class="step-d" data-en="I explore fast and share early. Ideas start rough on purpose because rough is easier to challenge. <strong>I bring in feedback before I am ready</strong>, because waiting until something feels finished is how you get attached to the wrong solution. I use AI tools to generate, iterate, and test directions at a speed that keeps the team moving. <strong>No ego. Just better work.</strong>" data-es="Desde ahi, comienzo a explorar. Las ideas a menudo comienzan como notas rapidas, bocetos o pequenos fragmentos que me ayudan a pensar. Uso el feedback de manera temprana y frecuente con disenadores y socios de producto porque las buenas ideas se fortalecen cuando son cuestionadas. No me apego a una solucion. Sigo refinando hasta que el diseno sirve al usuario de la mejor manera posible.">From there, I start exploring. Ideas often begin as quick notes, rough sketches, or small fragments that help me think. <strong>I use feedback early and often</strong> with designers and product partners because good ideas get stronger when they are challenged. <strong>I do not get attached to a solution.</strong> I keep refining until the design serves the user in the best possible way.</div></div>
+      <div class="step reveal d3"><div class="step-n">04</div><div class="step-t" data-en="Prototype &amp; Validate" data-es="Prototipar y Validar">Prototype &amp; Validate</div><div class="step-d" data-en="I build <strong>fully functional prototypes</strong>, not static mockups. Real interactions, real feedback states, real edge cases. Then I test them: heuristic reviews, usability sessions, expert walkthroughs. I look for where the experience breaks, where users hesitate, where the language fails. I also look hard for ways to reduce engineering effort, <strong>but never at the cost of the user.</strong> That line does not move." data-es="Prototipo para entender la experiencia completa y encontrar donde puede fallar. El prototipado me ayuda a ver el flujo, los estados de feedback, y los pequenos momentos que dan forma a la experiencia general. Luego evaluo mediante heuristicas, revision experta y user testing cuando es posible. Tambien busco formas de reducir el esfuerzo de desarrollo, pero nunca comprometiendo la experiencia del usuario."><strong>I prototype to understand the full experience and find where it may break.</strong> Prototyping helps me see the flow, the feedback states, and the small moments that shape the overall experience. Then I step back and evaluate through <strong>heuristics, expert review, and user testing.</strong> I also look for ways to reduce development effort, but <strong>never by compromising the user experience.</strong></div></div>
     </div>
   </div>
 </div>
@@ -295,7 +410,7 @@ footer span{font-size:10px;letter-spacing:.1em;color:#ccc;text-transform:upperca
     </div>
     <div class="project reveal">
       <div class="proj-n">01</div>
-      <div><div class="proj-t" data-en="Event Management at Scale" data-es="Gestion de Eventos a Escala">Event Management at Scale</div><div class="proj-d" data-en="Redesigned the <strong>end-to-end experience for managing events across 100+ countries</strong> at Amazon Web Services. A fragmented system used by teams with radically different contexts, languages, and workflows. Delivered a <strong>unified, accessible design that reduced operational friction globally.</strong>" data-es="Redsene la experiencia de extremo a extremo para gestionar eventos en mas de 100 paises en AWS. Un sistema fragmentado usado por equipos con contextos, idiomas y flujos radicalmente distintos.">Redesigned the <strong>end-to-end experience for managing events across 100+ countries</strong> at Amazon Web Services. A fragmented system used by teams with radically different contexts, languages, and workflows. Delivered a <strong>unified, accessible design that reduced operational friction globally.</strong></div><div class="proj-tags"><span class="proj-tag">UX Research</span><span class="proj-tag">Information Architecture</span><span class="proj-tag">Enterprise</span><span class="proj-tag">Accessibility</span><span class="proj-tag">AWS</span></div></div>
+      <div><a href="case-study-1.html" style="text-decoration:none;color:inherit"><div class="proj-t" data-en="Event Management at Scale ↗" data-es="Gestion de Eventos a Escala ↗">Event Management at Scale ↗</div></a><div class="proj-d" data-en="Redesigned the <strong>end-to-end experience for managing events across 100+ countries</strong> at Amazon Web Services. A fragmented system used by teams with radically different contexts, languages, and workflows. Delivered a <strong>unified, accessible design that reduced operational friction globally.</strong>" data-es="Redsene la experiencia de extremo a extremo para gestionar eventos en mas de 100 paises en AWS. Un sistema fragmentado usado por equipos con contextos, idiomas y flujos radicalmente distintos.">Redesigned the <strong>end-to-end experience for managing events across 100+ countries</strong> at Amazon Web Services. A fragmented system used by teams with radically different contexts, languages, and workflows. Delivered a <strong>unified, accessible design that reduced operational friction globally.</strong></div><div class="proj-tags"><span class="proj-tag">UX Research</span><span class="proj-tag">Information Architecture</span><span class="proj-tag">Enterprise</span><span class="proj-tag">Accessibility</span><span class="proj-tag">AWS</span></div></div>
       <div class="proj-impact"><div class="impact-n">100+</div><div class="impact-l" data-en="countries served" data-es="paises impactados">countries served</div></div>
     </div>
     <div class="project reveal">
@@ -316,11 +431,6 @@ footer span{font-size:10px;letter-spacing:.1em;color:#ccc;text-transform:upperca
   </div>
 </div>
 
-<!-- TRENDS -->
-<div id="trends" class="pg-section">
-  <div class="pg-sidebar">
-    <span class="pg-label" data-en="Industry" data-es="Industria">Industry</span>
-    <div class="pg-num">04</div>
   </div>
   <div class="pg-body">
     <div class="sec-intro reveal">
@@ -343,7 +453,9 @@ footer span{font-size:10px;letter-spacing:.1em;color:#ccc;text-transform:upperca
   <span class="contact-eyebrow reveal" data-en="Let's work together" data-es="Trabajemos juntos">Let's work together</span>
   <h2 class="contact-h reveal d1"><span data-en="Ready to build something<br><em>meaningful?</em>" data-es="Lista para construir<br>algo <em>significativo?</em>">Ready to build something<br><em>meaningful?</em></span></h2>
   <p class="contact-sub reveal d2" data-en="I am selective about where I work. I go where design creates real, measurable impact. If that sounds like your team, let's talk." data-es="Soy selectiva sobre donde trabajo. Voy donde el diseno crea impacto real y medible. Si eso suena como tu equipo, hablemos.">I am selective about where I work. I go where design creates real, measurable impact. If that sounds like your team, let's talk.</p>
-  <a href="/cdn-cgi/l/email-protection#2d5d4c4048414c494845485e4c6d4a404c4441034e4240" class="contact-link reveal d3"><span class="__cf_email__" data-cfemail="9dedfcf0f8f1fcf9f8f5f8eefcddfaf0fcf4f1b3fef2f0">[email&#160;protected]</span></a>
+  <a href="/cdn-cgi/l/email-protection#b9c9d8d4dcd5d8dddcd1dccad8f9ded4d8d0d597dad6d4" class="contact-link reveal d3"><span class="__cf_email__" data-cfemail="5222333f373e3336373a37213312353f333b3e7c313d3f">[email&#160;protected]</span></a>
+  <br><br>
+  <a href="data:application/pdf;base64,JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUgo+PgplbmRvYmoKMiAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYSAvRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZyAvTmFtZSAvRjEgL1N1YnR5cGUgL1R5cGUxIC9UeXBlIC9Gb250Cj4+CmVuZG9iagozIDAgb2JqCjw8Ci9CYXNlRm9udCAvSGVsdmV0aWNhLUJvbGQgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YyIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKNCAwIG9iago8PAovQ29udGVudHMgOSAwIFIgL01lZGlhQm94IFsgMCAwIDYxMiA3OTIgXSAvUGFyZW50IDggMCBSIC9SZXNvdXJjZXMgPDwKL0ZvbnQgMSAwIFIgL1Byb2NTZXQgWyAvUERGIC9UZXh0IC9JbWFnZUIgL0ltYWdlQyAvSW1hZ2VJIF0KPj4gL1JvdGF0ZSAwIC9UcmFucyA8PAoKPj4gCiAgL1R5cGUgL1BhZ2UKPj4KZW5kb2JqCjUgMCBvYmoKPDwKL0NvbnRlbnRzIDEwIDAgUiAvTWVkaWFCb3ggWyAwIDAgNjEyIDc5MiBdIC9QYXJlbnQgOCAwIFIgL1Jlc291cmNlcyA8PAovRm9udCAxIDAgUiAvUHJvY1NldCBbIC9QREYgL1RleHQgL0ltYWdlQiAvSW1hZ2VDIC9JbWFnZUkgXQo+PiAvUm90YXRlIDAgL1RyYW5zIDw8Cgo+PiAKICAvVHlwZSAvUGFnZQo+PgplbmRvYmoKNiAwIG9iago8PAovUGFnZU1vZGUgL1VzZU5vbmUgL1BhZ2VzIDggMCBSIC9UeXBlIC9DYXRhbG9nCj4+CmVuZG9iago3IDAgb2JqCjw8Ci9BdXRob3IgKFwoYW5vbnltb3VzXCkpIC9DcmVhdGlvbkRhdGUgKEQ6MjAyNjAzMzAxNzM0NTMrMDAnMDAnKSAvQ3JlYXRvciAoXCh1bnNwZWNpZmllZFwpKSAvS2V5d29yZHMgKCkgL01vZERhdGUgKEQ6MjAyNjAzMzAxNzM0NTMrMDAnMDAnKSAvUHJvZHVjZXIgKFJlcG9ydExhYiBQREYgTGlicmFyeSAtIFwob3BlbnNvdXJjZVwpKSAKICAvU3ViamVjdCAoXCh1bnNwZWNpZmllZFwpKSAvVGl0bGUgKFwoYW5vbnltb3VzXCkpIC9UcmFwcGVkIC9GYWxzZQo+PgplbmRvYmoKOCAwIG9iago8PAovQ291bnQgMiAvS2lkcyBbIDQgMCBSIDUgMCBSIF0gL1R5cGUgL1BhZ2VzCj4+CmVuZG9iago5IDAgb2JqCjw8Ci9GaWx0ZXIgWyAvQVNDSUk4NURlY29kZSAvRmxhdGVEZWNvZGUgXSAvTGVuZ3RoIDIzODUKPj4Kc3RyZWFtCkdhdTBEPyQiYVkoNEdxXFwxYUNFW1pXMT5UOldjdWxTcjFaPHBJKlNOSGBBcSYuKTQ0OFVwdDAzUjRoYyIrWywxcGspa3FOQVprY0siKW1ea00xRCE7JzE6TUlucEVHVEJDPWswcXAobnEzJUlcRGIwSkAzaDdBakduQUxWN3JgSD5QQSNwTFVxbFkwSXVKampxWWpFKyNNOlNCcDtdbzNwNVVUcUhjS1gqbz1HQjJuPTdsMl4+YW1cVnRoRGtzK2RyVER1PiNyRipyKVpmR21lNjRfIlRxNnA/LWAyZmNtNjptcyNEOHVvbklRaz5iSV0jRUhIZlUqVVZHV2ZqMWFCS1UuQ11AOnRZdEIxUUlSQ1MhMTMoRERBVTQmV3FLUHBcbVFcJTBNN2YxUiwyRSZNVT4nbkA2JSZSJEw4LHA7P29TS1BFWnNtci5ccDlwLi0wQFQtN3FNV1ZTLDg5YC8qaSRvQEpXT0Y+PWpILDVWPDFuczlJQ1QuT2ErKyFcPUViM0EzNT50PWoqZkRrVTtVT0dJLzMxMCRibS5nLmQvTVJaKGJzQiFKJSY8J19mZW9ZckhLPV9WV1VrTkI5bHImVE1XNFZyb1k/a1FgIksyMlRxdGs0JmknVjtbLEFHRjtlISs1UHRbU1w5Jl5tdD1qOE1ENnJJc1NVUTcqOjx1YzA2UUgjQzdtM1leIU5YUE9xY1tQIWFdJkojZiZvS2I7VydoLFtBNWljYiRyciVbKWI2VmQ+WUFKVnFwRC9QWSx0ZTUvOlt1V0I4Pih0bjRNMSJmZDhIVjFnWDwzRUFbbkZTYEE8XE48XzZkPWlMaCUvWENoXW9aUVkhKnJSRzleJUFxaDhrXD1SLmknPjA1UjpRL2xJKko2PFVjJXNfWEomJ1BwZjs2YT5wKFxFKj1JQiVmVlk6Q1lFWDBYUmM4aW1rU24pQFgySCowajgtMTh1MHQ+UXBtNUdjYWg0RCphZU1EUS1RaUtCb1o6VEVMQC1UX2spNV4oTklWZSxkQ0FwL0h0aHVpMDJKSmRcX0BFSzVyZi4hZGwnSCklQm4oTlNmaVhvXUcwKm8nSCJ0YV8/WWBfa1h0dGouZ2spZyVEVlJfOEVDcWNOajsvPytkSStKUl5hOmozTGZiIk9qZS85aFhoJDsxbUpWb1dNNylZK2NVMk5ZZS0nQC0ocm1fcygyblRAOF4zbnMkLS5CSlE5Jm47UFB0Q0syL20lW0AoYUM/Wj4+KV9tbmRpSmpPaFM2NWoiVyVtWSRsZ0BUREgmckxkJDtRS2EqOUBcUGJjKUBuY2FtKUBERiRYVVZeN3VeaSxRLCJfIkJeY2hEKj50cERuWG5ZQV9oPUs8YClZRWFfO3U1by4iY1FETUgjIVJmRjBdVkxgcjxOL1BsJC1oRFY8MV8qRkA0SVJBYz1Cc0FNT15AZUArOFBEWmwpQz0iTWxVcDwzZzpiWkI/RUo7bGlScFFVdU4+Iy9ia3BuMXU/QzRxXVQrQ21RI2wmPFcucytePE50cnNdbFksMUdNXFoxOEVzPUkwKSZWRnVKRU4hKWA8MFAqNnAqMVVmYF0wOiM5T2Y2ZGlqQ24vZiptcSIxPGBpPz5ZSW1YLU89ZkNqQUI+aSlmcFwqJ0E9bypWLi1aQmJPXzs0Lis7ckg4T1VNJ0UlTGUlRD1gJGMzOzw6aUNHbj1MQTRFSFsnSU5pNDZkJjVrITEwPTREWTFAXnQyaDcxSzdGc2hNL2okTUI3QyRZQF9TOzxgImI1ZTdxZilvOGRASitccyMncThfVjluK2ciQiQwcGZaaURdYmBaUDk7X24tVnIoLGdec1NtP0tDUyNGM2RGdEE6KyxvSz08I00kMGY9Pi9oI1BgP2QldG5zZmM/aSJkIj5mXkc/Q140OyNIInRoZVBASEBKMmMzXFBQdXM3ZDAuOGZccTlBJDJWXm1Xc1RCLTZqcj0mVEwkTjBkV1phJzoyTFowOGIhUD1uPmxyWC8qRytfJzZMO1owUz0kbF8+KUFCKG5GUC4tZUZDIz81WF9bRjhpIicvITZzRk9OXWU6VTwqY1UhMEElKDJndDBYazhESClCTCFqR2NwUEY/KVNDPSowTDZWbEVpak1cZSRXJXRfQWhUP1gwdT1fVCdkbTFYdSgkYGhnbi5gMC9XcVInMFEhKS9xcCZZJ09pU1k1N3UnQDpxVGhOR0xTSzw8Ym9jT2o0RHNAYGFOTVBULWVCWVhZLl5FNFJjUl9MQWRXIWA4YGU+TDpWVF88PHQ1Zz0zMnFxTT9WVTdnQ3RTOz9WQztwS0MlIUosQ11EL3BLTD5pS2k3YEJXVUcobSpvVyVFQW1GbkRoL2ZMVl5AJ3BnWFA5TUlDOlhYKjgoYmEwTlMxJTpkYScnLXM0IyQoZ2ZbV2RmaWslWnFHUGFiX0p0J2RMdXIqLWFiL0BPbDtAdWImW0gxRWJXZWFaSF5hdDshSCRcWzBIK2UyaF5GWl41KE5eRT1WNjdxQT9Iakc3T2JQRGotMmkqYC1qayteN19tNGBHIzNXKzRqI0tcOGtqa2koYFVJZ2JpbWNkWjtEZlNXPVRCRktIMWpjdGBzYT9YTChTYTQrb2QmUVJMWWlJNUo1NCpsWCRkSCdNMEEpJjYtRCxALD5yRCRJT3BpRG5vJ0xgL11kbEJaQidpWVFYN2EiUl9kPFBUM09UYl9NInBVKk0xRFxXckBMQW1vKV9nalprLS1JKC8nYDFJOGY0ZVBhdGZLbGEvInBUTCVfWF9uKjFATVdbb2w5NCVMVlZCUVcoa1RBLUAmWzZqY0dVI1lbUkNJKDNCMzgsVU9vMWRFPC9OOlFGXU1TZyZFRUNMai01S2o0Pl9tUyNGPm9EblU/UlteQjtkcW4yU1w7IjR0Izs+JnRILXEqYFBMQCpVMTU+TTlMU2EpSDBVUVxGSGhrbjw2YGhVUzxhYjRoPlxrSUIyZWVKYGtlWW9zcVxDZUI/XUM4JD9GRk4nMC5ENykhQjs9bkFxcThcRSs2YlYzQWZcbV1cI24wQF9ST0g4XzE0c2BnUiZVa2VfJE5tJkVsRnRmTmhbNCdvSGY1Nl5oUEtALGxgWDA0XEEnJyoyRkkjWytRYScwcyNEWlFCYyVTRVglbWZAQTVsbjJFbm9nOD9pcjJHcGBCbCRaTUZ+PmVuZHN0cmVhbQplbmRvYmoKMTAgMCBvYmoKPDwKL0ZpbHRlciBbIC9BU0NJSTg1RGVjb2RlIC9GbGF0ZURlY29kZSBdIC9MZW5ndGggMjI0NQo+PgpzdHJlYW0KR2F1MERoY28pIidSZl9aXERLRkQxJkVdWCshPFE/PDNbVldhSzQ7WiYmLHQ/NWInYXMtRS9XcGZDKUdmaWlGPihSOEgyYVpvJHQmUzlzWnE+XUIyYVtCRUY3RScvYyo7XHJbTEFvaHFHWFoiQm0mQzEiS2hLLWslNCducm0/KkIkZTsyWEUvJTxxYV5dS082O1I0ZlNOSEpnakgwZU1RIkolRXRfalQ2PyVoW2NsRUUnYjpERSU1OTwvdWJSNTdTRVtCYGwiOVhQJlFabVdNdEooZDxGUnBiakptNExCNyZhcl1VTUpGdC1uJTZSX3JwQEtULjdqY0wjIzJlWC1yLUdhYm4vbmI6KUJAajhSYjQ0JV1HdTRGUEM4cjVeZ1ZvOUNCZCw7Tl9fIj1wIixlVls5V3NvI1w+R0ZRIk9wJVhSXTdeJWxhYGJcZHArWk5qKCY8KG9HMHVgLHFMNy8kKklZZyxVP2o4UFwtJFpJJywiUVsnbiJvZl4lbz1LM2JvJnJtJDQwSSJBZ0FNNl8pOyY5QUtDV3AoaFdec1lvNkhiOioyXDdaQlcmclhzVlg5SWYoITIhVjRHO2lGSG1DZWQ7ST8+ZHM2L2VqWUYva0hRUjVhMm85ViFDTUFpL0trXGFeNC8iY0VNYitKb10iU109RFBSLSdjUC02dSc8X2lsTFMublNdczBxPHNIYWohPSQyKk0hbjxmbztbX0lRMGI8RERoL3FnRF41LWk+RVtPKHRRX2dgOlZuLFBiZkpAQixIMydON3NEVUJ0I1pmLHFudEJkIkFCXGYqUzskYDxJb0A/VFxEKE9SZ0VJWjxcSG1dc0xGJ2pSRlplOGo3LG1MVmBtOz9TJ1hbP2VmKkYtSz4+VS0nVEs2QWZROUNFMTVJazpzXFxOUW86OSE2NWhbXXI5OHVYTHUpOjAsYWR1LmArOyMvamAuLz9BX2ltUSorakhuUW0+ZFZ1JyNBKEUnbkBqSmljS19KIlRNPThjTWJTNlRsI2RjaWVFXlJWSjAlc1tWbFlMVnQ0ZzpkcWpoXyw0XWdqVjI5TmNVI0lfZ3FyZilrWWkoWC9CayEqZSUsIkcpXnJTOGg/SzVkIjNkbDFrYm1yV2hVUSFVZ1QoPkElZjEtVTRmXjBdO0pRM1IpRStQPGBVR1UpM1BKJjInSHFcYCNVOkVgPlwhbGpNTEJSSjMmWVw2RTxzI1ZLblVDa2lYQ1IjVnRXK2okck4qKllBTzY7Sz1AIl1Uc2VSYHA7NzdwJitSQzRaN1BXKEBySlFzISQsSV9mUnJvX2VeRTtlZUhyPixsNktdQ2o3dWxiJG5PNVdPJmJGP1dTJzJtT2Z1OjIqPiIsWGp0WyhCTmM+RiVNZTcvKFI0RiIranUja043MCxOZXVNR1xCLD0hKjBPcXVBSmY9I0UhI0xTQE1LNjM8MTtzR1RPPFciJU1BZFBGZ1xxWzJLJ09sWFdSUGIwOm1fJzlhQ0VGJE0zK0s3TjJTISwmPlxBb1hAcSNiVk0uKi8oNy5zUGI8K0c7Sl1tbjEycTQyNSdjSypULFpCdFlfNXVvPnMrQGNrSUlZRTstWGo0aE8ybkhAcDYscjdIZDVHOyRmMmAyX0VwSDBFUFhqM1g2KklCNzUtK0pqQWZrNUdEQWlxWistVkFvRTFWJytBJyJoZT4zJGpqb0lwQEUnImNLbFloQEYjMUdSMTEpdTpOYG5PMzdVRGdRMCYhKTAsKFxNLyE3ckdlMmkvP3JNSU9hNyQtL1xGQ24qPCw+LTFHdFNfM1EmQU5cWDxSU1AqLWw3P1dhYTNeNWprTjk4UlY6KkAxczhSQWhsNCtTVGIvQVxHITJATzAqJlNuIlQwKmAqP1VMTj06MmlbLVAwRUE8PDw/N2coQTZOZjhNRDo+WS9iQ01LZVJTcCEwcFNyRUI/YW4yaFlaJGhiXFZhIi0yIUtTZGFEUz03KDBMXltLSlo3WC4mamAsXGFbRnJUNGdfLEI2THNQT2FHXTlUJWlZUilPN25RYjc1LWkmZ0NMLyZDXlglKU1FSF8nTXB0JzUoKj4zdVgrJ1RUUC9UbC5ZWS5qYFY7cE9kPGxxNk4zPyJpXiVFT21OJnVeIUNoX3FFcFBhMihFcWp0S0lQdSNBIk1hMEBoajNiKTwlKCkjTHAyXFJtbls1MHAlXicsVWpiW2JLKDRLPkVIVGc+ZidAalQ3bllrSD10LmI+PCEqR0FrJFI1P2MxZ0ZuNyMyclVOPyZIYl9iTXJZaSJsXzkjXE9YOjJwXyI3V0JiN3A5SkMlYVVdamNfaFhzOSVBPWkxPzooI2s2bl9VYDsiIjQ0MEAxakwzNmI8LyJJPiFfXj4zMiJwI0g6T2tyVWs/XmwsbC1PZktmO0VZPVJoZ18hK29JciFYXWd0Z09cbDghRlA5PDJpQTVQQiovU2dmPkdUZE0rPGkuNEdTQypFX19rZChOaGlnKVc2SDgxPTc7L2VTLFMtNVY5P29xIVRCR1xHMyhGMzBCLyRIO3FaI2MnSCNBJzA7XlYmOGcpYiUsL2NzcEFlKDNlInBSYlFUOVhdM01KMUM3KTFPSlpzaE01NCsiVnVTX0s5aEhPKU1QZGloWSZzSyFqI2k/aVokZ0VLWTxecSJgUlQ+TkVDO0FBOCgyPmRNTyokPSZcc2JkTG1GOkdhb2xbODdaZSdsXCIiZXIlcEMjWktXRClXNnQ7T1U8IjFdPmlPZjZiOjdnPFtdLz5gcGtEQ1NmV3UnLyokX1xmLkFkSVBJKjo2YjxES0QxSkBYWDUvRlBGRSwmUEMiXi8mRTgzND1cT0JHVksrU0BpRVQiSlZATzczR0JjXTBcOFBSTm5IIlBAZy9AZUYrUzNwM0xRI0pDZz0zRmA3QSliQz5fPG8jTXRUcSFAJyFYUXFGPnRxNmFodUBHJj0vaT5lVUEuW2IpX19zYnJnJCk6QTRDN2o+O0ZIY2NQcnJLUV4xTFV+PmVuZHN0cmVhbQplbmRvYmoKeHJlZgowIDExCjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDA2MSAwMDAwMCBuIAowMDAwMDAwMTAyIDAwMDAwIG4gCjAwMDAwMDAyMDkgMDAwMDAgbiAKMDAwMDAwMDMyMSAwMDAwMCBuIAowMDAwMDAwNTE0IDAwMDAwIG4gCjAwMDAwMDA3MDggMDAwMDAgbiAKMDAwMDAwMDc3NiAwMDAwMCBuIAowMDAwMDAxMDU2IDAwMDAwIG4gCjAwMDAwMDExMjEgMDAwMDAgbiAKMDAwMDAwMzU5NyAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9JRCAKWzw2MTIzNGZiNzFkZDc2Mjk2MWE0OGNiZWNjMmE3YTQ5Mj48NjEyMzRmYjcxZGQ3NjI5NjFhNDhjYmVjYzJhN2E0OTI+XQolIFJlcG9ydExhYiBnZW5lcmF0ZWQgUERGIGRvY3VtZW50IC0tIGRpZ2VzdCAob3BlbnNvdXJjZSkKCi9JbmZvIDcgMCBSCi9Sb290IDYgMCBSCi9TaXplIDExCj4+CnN0YXJ0eHJlZgo1OTM0CiUlRU9GCg==" download="Pamela_Dehesa_Resume_2026.pdf" class="resume-btn reveal d4">Download Resume</a>
   <p class="contact-note reveal d4" data-en="NDA available · All conversations confidential" data-es="NDA disponible · Conversaciones confidenciales">NDA available · All conversations confidential</p>
 </section>
 
@@ -354,19 +466,10 @@ footer span{font-size:10px;letter-spacing:.1em;color:#ccc;text-transform:upperca
 
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function setLang(lang){
-  document.getElementById('btn-en').classList.toggle('active',lang==='en');
-  document.getElementById('btn-es').classList.toggle('active',lang==='es');
+  document.querySelectorAll('#btn-en').forEach(b=>b.classList.toggle('active',lang==='en'));
+  document.querySelectorAll('#btn-es').forEach(b=>b.classList.toggle('active',lang==='es'));
   document.querySelectorAll('[data-en]').forEach(el=>{
     const v=el.getAttribute('data-'+lang);
-    if(v) el.innerHTML=v;
-  });
-}
-window.addEventListener('scroll',()=>{
-  const past=window.scrollY>window.innerHeight*0.7;
-  document.getElementById('lang-bar').classList.toggle('show',past);
-  document.getElementById('inner-nav').classList.toggle('show',past);
-});
-const io=new IntersectionObserver(entries=>{
-  entries.f
+ 
