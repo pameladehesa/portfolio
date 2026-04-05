@@ -17,6 +17,9 @@
 - Filler transitions: "Additionally", "Furthermore", "It is worth noting"
 - Buzzwords: "passionate", "driven", "innovative", "synergy"
 
+## When in doubt
+- If information is missing or unclear, ask before writing. Never invent details about Pamela's process, experience, or work.
+
 ## Tone checks
 - If it sounds like a LinkedIn headline, rewrite it.
 - If it could apply to any designer, it's too generic — make it specific to Pamela.
